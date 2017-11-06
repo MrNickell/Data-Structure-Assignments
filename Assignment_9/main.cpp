@@ -2,6 +2,7 @@
 #include <sstream>
 using namespace std;
 
+//树节点
 struct AVLNode{
     int data;
     AVLNode* left;
@@ -10,6 +11,7 @@ struct AVLNode{
 };
 
 AVLNode* root = nullptr;
+
 
 int max(int a, int b)
 {
@@ -116,14 +118,16 @@ AVLNode* insert(int key,AVLNode* T)
 
     return T;
 }
-void inorder(AVLNode* T){
+void inorder(AVLNode* T)
+{
     if(T == nullptr)
         return;
     inorder(T->left);
     cout << T->data << "->";
     inorder(T->right);
 }
-bool find(AVLNode* T,int key){
+bool find(AVLNode* T,int key)
+{
 
     if(T == nullptr)
         return false;

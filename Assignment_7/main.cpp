@@ -11,21 +11,25 @@ int main() {
 
     int weight;
     //读取权重
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++)
+    {
         cin >> weight;
         weights.push(weight);
     }
 
-    int cost = 0,currentWeight = 0;
+    int cost = 0,curWeight = 0;
 
-    //Huffman算法的应用~
-    while(weights.size() >1){
-        currentWeight = weights.top();
+    //Huffman
+    while(weights.size() >1)
+    {
+        curWeight = weights.top();
         weights.pop();
-        currentWeight += weights.top();
+
+        curWeight += weights.top();
         weights.pop();
-        weights.push(currentWeight);
-        cost += currentWeight;
+
+        weights.push(curWeight);
+        cost += curWeight;
 
     }
     cout << cost << endl;

@@ -18,26 +18,32 @@
 using namespace std;
 
 class Dataset{
-private:
-    int               _command;
-    int               _currentLine;
-    int               _wordCount;
-    int               _nonWordCount;
 
-    string            _currentWords;
-    map<string,int>   _wordMap;
+private:
+    int               _command;           //命令
+    int               _currentLine;       //目前所在行
+    int               _wordCount;         //单词计数
+    int               _nonWordCount;      //非单词计数
+    string            _currentWords;      //目前的单词串
+    map<string,int>   _wordMap;           //单词地图
+
 public:
-    Dataset():_command(0){
-    }
-    void createFile(){
+    //构造函数
+    Dataset():_command(0){ }
+
+    //
+    void createFile()
+    {
         string fileName,line;
         cout << "输入要建立的文件名" << endl;
         cin >> fileName;
         ofstream file;
+
         file.open(fileName);
 
         char command = 'n';
-        while (command == 'n') {
+        while (command == 'n')
+        {
             cout << "请输入一行文本:";
             getline(cin,line);
             getline(cin,line);
@@ -46,10 +52,11 @@ public:
             cin >>command;
         }
         cout << "建立文件结束！" << endl;
-        file.close();
 
+        file.close();
     }
-    void printMenu(){
+    void printMenu()
+    {
         cout << "**********************************" << endl;
         cout << "*******文本文件单词的检索与计数******" << endl;
         cout << "---------------------------------" << endl;
@@ -60,6 +67,7 @@ public:
         cout << "---------------------------------" << endl;
 
     }
+
     void wordCount(string fileName)
     {
         ifstream file;
@@ -143,6 +151,7 @@ public:
         }
         file.close();
     }
+
     void wordLocate(){
         cout << "======================================" << endl;
         cout << "||      文本文件字串的定位统计及定位    ||" << endl;
@@ -176,18 +185,19 @@ public:
             cout << "请输入文本文件名:";
             cin >> fileName;
             wordPosition(fileName);
-
-
-        } else {
-            cout << "输入错误，已退出！" << endl;
         }
+        else
+            cout << "输入错误，已退出！" << endl;
     }
+
     void executeCommand(){
-        while(_command != 4){
+        while(_command != 4)
+        {
             printMenu();
             cout << "请选择<1 ~ 4>:";
             cin >> _command;
-            switch (_command) {
+            switch (_command)
+            {
                 case 1:
                     createFile();
                     break;
@@ -198,6 +208,7 @@ public:
                     wordLocate();
                     break;
                 default:
+                    cout << "输出错误,请重新输入" << endl;
                     break;
             }
 

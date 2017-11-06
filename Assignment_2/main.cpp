@@ -1,14 +1,7 @@
-//
-//  main.cpp
-//  约瑟夫生者死者游戏
-//
-//  Created by MrNickel on 2017/10/11.
-//  Copyright © 2017年 MrNickel. All rights reserved.
-//
-
 #include <iostream>
 using namespace std;
 
+//每一个乘客
 class Passenger{
 public:
     int _position;
@@ -17,64 +10,93 @@ public:
     Passenger(int position): _position(position){}
 };
 
+
+//游戏类，主要由循环链表存储实现
 class DeadGame{
 private:
-    int _deadCountM;
-    int _stillAlive;
-    Passenger* _intialPosition;
-    Passenger* _currentPosition;
+    int           _deadCountM;   //死亡人数
+    int           _stillAlive;   //还活着的人的人数
+    Passenger*    _initPos;      //最初的位置
+    Passenger*    _curPos;       //目前的位置
 public:
-    DeadGame(int N, int beginPosition,int M):_deadCountM(M),_stillAlive(N) {
-        _intialPosition = new Passenger(1);
-        auto begin = _intialPosition;
-        _currentPosition = _intialPosition;
-        for(int i = 2; i <= N; i++)
-        {
-            auto temp = new Passenger(i);
-            if(i == beginPosition)
-                _intialPosition = temp;
-            
-            _currentPosition->_next = temp;
-            _currentPosition = temp;
-            _currentPosition ->_next = nullptr;
-        }
-        _currentPosition->_next = begin;
-        _currentPosition = _intialPosition;
-    }
-    Passenger* findHim(){
-        Passenger* p;
-        for(int i = 0; i < _deadCountM - 1; i++)
-        {
-            p = _currentPosition;
-            _currentPosition = _currentPosition->_next;
-        }
-        return p;
-    }
-    void showAlive(){
-        while(_currentPosition->_position < _currentPosition->_next->_position)
-            _currentPosition = _currentPosition->_next;
-        _currentPosition = _currentPosition->_next;
-        for(int i = 0; i < this->_stillAlive; i++){
-            cout << _currentPosition->_position << "\t";
-            _currentPosition = _currentPosition->_next;
-        }
-        cout << endl;
-    }
-    void killHim(Passenger* prePosition){
-        auto p = _currentPosition;
-        prePosition->_next = _currentPosition->_next;
-        _currentPosition = _currentPosition->_next;
-        cout << p->_position << endl;
-        _stillAlive--;
-        delete p;
-    }
-    int getN(){
+    DeadGame(int N, int beginPosition,int M);   //初始化整个游戏
+    
+    Passenger* findHim();                       //找到要死的人
+    
+    void showAlive();                           //展示还活着的人的序号
+
+    void killHim(Passenger* prePos);            //kill this man！
+
+    int getN()
+    {
         return _stillAlive;
     }
     
     
     
 };
+//初始化整个游戏
+DeadGame::DeadGame(int N, int beginPosition,int M):_deadCountM(M),_stillAlive(N)
+{
+    _initPos = new Passenger(1);
+    auto begin = _initPos;
+    _curPos = _initPos;
+    
+    for(int i = 2; i <= N; i++)
+    {
+        auto temp = new Passenger(i);
+        if(i == beginPosition)
+            _initPos = temp;
+        
+        _curPos->_next = temp;
+        _curPos = temp;
+        _curPos ->_next = nullptr;
+    }
+    
+    _curPos->_next = begin;
+    _curPos = _initPos;
+}
+
+//找到要死的人
+Passenger* DeadGame::findHim()
+{
+    Passenger* p;
+    for(int i = 0; i < _deadCountM - 1; i++)
+    {
+        p = _curPos;
+        _curPos = _curPos->_next;
+    }
+    return p;
+}
+
+//展示还活着的人的序号
+void DeadGame::showAlive()
+{
+    while(_curPos->_position < _curPos->_next->_position)
+        _curPos = _curPos->_next;
+    
+    _curPos = _curPos->_next;
+    for(int i = 0; i < this->_stillAlive; i++)
+    {
+        cout << _curPos->_position << "\t";
+        _curPos = _curPos->_next;
+    }
+    cout << endl;
+}
+
+//kill this man！
+void DeadGame::killHim(Passenger *prePos)
+{
+    auto p = _curPos;
+    
+    prePos->_next = _curPos->_next;
+    _curPos = _curPos->_next;
+    cout << p->_position << endl;
+    
+    _stillAlive--;
+    delete p;
+}
+
 
 int main(int argc, const char * argv[]) {
     cout <<"现有N个人围成一圈，从第S个人开始依次报数，报M的人出局，再由下一人开始报数，如此循环，直至剩下K个人为止"<<endl;
@@ -107,23 +129,4 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

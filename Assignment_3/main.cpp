@@ -2,18 +2,19 @@
 #include <vector>
 using namespace std;
 
+//坐标
 struct Position{
     int x;
     int y;
 };
 
-
+//迷宫
 char maze[100][100] = {
         "#######",
         "#0#000#",
         "#0#0###",
-        "#000#0#",
-        "#0#000#",
+        "#00000#",
+        "#0###0#",
         "#0#0#0#",
         "#######",
 };
@@ -21,11 +22,20 @@ char maze[100][100] = {
 
 Position direction[4] ={{0,1},{0,-1},{-1,0},{1,0}};
 
+//出口的位置
 Position exitPos = {5,5};
+
+//用来存储每一个经过的坐标
 vector<Position> route;
+
 int tag = 0;
-void dfs(int x,int y){
-    if(x ==  exitPos.x && y == exitPos.y){
+
+//递归深度搜索
+void dfs(int x,int y)
+{
+    //发现出口即可退出
+    if(x ==  exitPos.x && y == exitPos.y)
+    {
         tag = 1;
         route.push_back(exitPos);
         return;
@@ -48,13 +58,16 @@ void dfs(int x,int y){
         }
 
     }
-
 }
-void printMap(){
-    cout << "迷宫地图:" << endl;
-    cout << "\t";
+
+//打印地图
+void printMap()
+{
+    cout << "迷宫地图:\n\t";
+
     for(int i = 0; i < 7; i++)
         cout << i << "列" <<"\t\t";
+
     cout << endl;
     for(int i = 0; i < 7; i++)
     {
@@ -65,20 +78,25 @@ void printMap(){
         }
         cout << endl << endl;
     }
-
-
 }
 
-
+//打印路线
+void printRoute()
+{
+    cout <<"\n迷宫路径:" << endl;
+    for(auto iter = route.begin(); iter != route.end() - 1;iter++)
+        cout << "<" << iter->x << "," << iter->y << "> "<< "---> ";
+    cout << "<" << (route.end() - 1)->x << "," << (route.end() - 1)->y << ">"<<endl;
+}
 
 
 
 int main() {
     printMap();
     dfs(1,1);
-    cout <<"\n迷宫路径:" << endl;
-    for(auto iter = route.begin(); iter != route.end() - 1;iter++)
-        cout << "<" << iter->x << "," << iter->y << "> "<< "---> ";
-    cout << "<" << (route.end() - 1)->x << "," << (route.end() - 1)->y << ">"<<endl;
+
+    printRoute();
+
+
     return 0;
 }

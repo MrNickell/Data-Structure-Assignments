@@ -7,6 +7,5 @@ int main() {
     song.init();
     song.menu();
 
-
     return 0;
 }

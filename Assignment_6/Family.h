@@ -29,17 +29,18 @@ public:
     void init();
     void menu();
     void modify(Member* p);
-    void insert(Member* p,string name);
     void display(Member* p);
     void dele(Member* p);
     void deleChild(Member* p);
+    void insert(Member* p,string name);
     void changeName(Member* p, string name);
     Member* find(Member* p,string name);
 
 };
 
-
-void Family::init(){
+//初始化树
+void Family::init()
+{
 
     cout << "**\t\t\t  家族管理系统\t\t\t\t**\n";
     cout << "==========================================\n";
@@ -61,14 +62,17 @@ void Family::init(){
     cout << "此家谱的祖先是" << _ancestor->name << endl << endl;
 }
 
-
-void Family::menu() {
+//菜单与选项
+void Family::menu()
+{
 
     char command = 'h';
-    while(command != 'E'){
+    while(command != 'E')
+    {
         cout << "请选择要执行的操作:" ;
         cin >>command;
-        switch(command){
+        switch(command)
+        {
             case 'A':
             {
                 cout << "请输入要建立家庭的人的姓名:";
@@ -149,7 +153,9 @@ void Family::menu() {
 
 }
 
-Member* Family::find(Member* p,string name) {
+//按名字找人
+Member* Family::find(Member* p,string name)
+{
 
     if( p == nullptr )
         return nullptr;
@@ -167,7 +173,9 @@ Member* Family::find(Member* p,string name) {
 
 }
 
-void Family::modify(Member* p) {
+//修改姓名
+void Family::modify(Member* p)
+{
 
     cout << "请输入"<< p->name << "的子女的人数:";
     int num;
@@ -176,7 +184,8 @@ void Family::modify(Member* p) {
     string childName;
     vector<string> childNames;
     cout << "请依次输入"<<p-> name << "的儿女的姓名:";
-    for(int i = 0; i < num; i++){
+    for(int i = 0; i < num; i++)
+    {
         cin >> childName;
         childNames.push_back(childName);
     }
@@ -191,7 +200,9 @@ void Family::modify(Member* p) {
 
 }
 
-void Family::insert(Member* p,string name){
+//添加家庭成员
+void Family::insert(Member* p,string name)
+{
 
     if(!(p -> child))   //如果p没有孩子
     {
@@ -218,7 +229,9 @@ void Family::insert(Member* p,string name){
 
 }
 
-void Family::display(Member *p) {
+//打印
+void Family::display(Member *p)
+{
     if(!(p -> child))   //如果p没有孩子
     {
         cout << "他(她)没有孩子" << endl;
@@ -228,7 +241,8 @@ void Family::display(Member *p) {
         cout << p->name << "的第一代子孙是:";
         p = p->child;
         cout <<p->name<< "   ";
-        while(p -> sibling != nullptr){
+        while(p -> sibling != nullptr)
+        {
             p = p->sibling;
             cout <<p->name<< "   ";
         }
@@ -236,15 +250,18 @@ void Family::display(Member *p) {
     }
 }
 
-void Family::changeName(Member *p,string name) {
+void Family::changeName(Member *p,string name)
+{
     cout << p->name << "已经更改成";
     p->name = name;
 }
 
 //接下来的两个函数用来杀死所有孩子
-void Family::deleChild(Member* p){
+void Family::deleChild(Member* p)
+{
     auto temp = p;
-    while(p->child!= nullptr){
+    while(p->child!= nullptr)
+    {
         temp = p->child;
         dele(p);
         p = temp;
@@ -252,7 +269,8 @@ void Family::deleChild(Member* p){
     dele(temp);
 }
 
-void Family::dele(Member *p) {
+void Family::dele(Member *p)
+{
 
     if(p->sibling == nullptr)
     {

@@ -13,21 +13,23 @@ struct Edge{
 class ElecNetwork{
 private:
     Edge _network[1000];
-    int _father[1000];  //利用并查集查找爸爸
-    int _count;      //顶点的个数
+    int _father[1000];        //利用并查集查找爸爸
+    int _count;               //顶点的个数
 public:
     void createFather();
     void createNetwork();
-    void menu();  //打印主菜单
-    void loop();   //主循环
-    void quickSort(Edge network[],int left,int right);
+    void menu();              //打印主菜单
+    void loop();              //主循环
+    void display();
     void generateMinTree();
     char findFather(char x);  //有关并查集的两个函数 查找与合并
     void Union(char a,char b);
-    void display();
+    void quickSort(Edge network[],int left,int right);
 
 };
-void ElecNetwork::display(){
+
+void ElecNetwork::display()
+{
     cout <<"最小生成树的顶点以及边是:\n\n";
     for(int i = 0; i < _count; i++)
     {
@@ -35,8 +37,10 @@ void ElecNetwork::display(){
             cout << _network[i].begin << "-<" << _network[i].value << "> ->" << _network[i].end <<"    ";
     }
 }
+
 //快速排序 用于找最小的生成边
-void ElecNetwork::quickSort(Edge *a, int left, int right) {
+void ElecNetwork::quickSort(Edge *a, int left, int right)
+{
     int i,j,mid;
     Edge temp;
 
@@ -67,14 +71,16 @@ void ElecNetwork::quickSort(Edge *a, int left, int right) {
 }
 
 //找到自己的爸爸
-char ElecNetwork::findFather(char x){
+char ElecNetwork::findFather(char x)
+{
     if(_father[x] < 0)
         return x;
     else
         return _father[x] = findFather(_father[x]);
 }
 
-void ElecNetwork::generateMinTree() {
+void ElecNetwork::generateMinTree()
+{
     char begining;
     cout << "请选择起始顶点:";
     cin >> begining;
@@ -84,7 +90,8 @@ void ElecNetwork::generateMinTree() {
         //如果没有连通的话
         if(findFather(_network[i].begin) != findFather(_network[i].end))
             Union(_network[i].begin,_network[i].end);
-        else{
+        else
+        {
             _network[i].begin = '?';
         }
     }
@@ -92,17 +99,17 @@ void ElecNetwork::generateMinTree() {
 }
 
 //找到自己的祖宗(连通 or 不连通)
-void ElecNetwork::Union(char a,char b){
-
+void ElecNetwork::Union(char a,char b)
+{
     char father1,father2;
     father1 = findFather(a);
     father2 = findFather(b);
     _father[father2] = father1;
 
-
 }
 
-void ElecNetwork::menu() {
+void ElecNetwork::menu()
+{
 
     cout << "**\t\t\t  电网造价模拟系统\t\t\t\t**\n";
     cout << "==========================================\n";
@@ -127,11 +134,12 @@ void ElecNetwork::createFather()
         _father[temVertex] = -1;
     }
 }
-void ElecNetwork::createNetwork(){
+void ElecNetwork::createNetwork()
+{
     Edge tempEdge;
     int i = 0;
-    while(1){
-
+    while(1)
+    {
         cout << "请输入两个顶点以及边:";
         cin >> tempEdge.begin;
         cin >> tempEdge.end;
@@ -145,10 +153,10 @@ void ElecNetwork::createNetwork(){
     quickSort(_network,0,i - 1); //对权值进行排序
 
 }
-void ElecNetwork::loop(){
+void ElecNetwork::loop()
+{
 
     char command = 'A';
-
     while(command != 'E')
     {
         cout << "\n请选择操作:";

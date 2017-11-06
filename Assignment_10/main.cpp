@@ -38,15 +38,18 @@ void check(int* numbers, int n)
     cout << "排序成功" << endl;
 }
 
-int* geneRandom(int n){
+int* geneRandom(int n)
+{
     auto nums = new int[n];
     srand(time(NULL));
+
     for(int i = 0; i < n; i++)
         nums[i] = rand() % n;
 
     return nums;
 }
-void bubbleSort(int* numbers, int n){
+void bubbleSort(int* numbers, int n)
+{
     int temp;
 
     for(int i = 0; i < n ; i++)
@@ -62,7 +65,8 @@ void bubbleSort(int* numbers, int n){
         }
 
 }
-void selectSort(int* numbers, int n) {
+void selectSort(int* numbers, int n)
+{
 
     int temp;
     for(int i = 0; i < n - 1; i++)
@@ -77,7 +81,8 @@ void selectSort(int* numbers, int n) {
             }
         }
 }
-void shellSort(int* numbers, int n){
+void shellSort(int* numbers, int n)
+{
 
     int j, gap;
 
@@ -97,14 +102,16 @@ void shellSort(int* numbers, int n){
             }
 
 }
-void insertSort(int* numbers, int n){
+void insertSort(int* numbers, int n)
+{
     for(int i = 1; i < n; i++)
     {
         auto temp = numbers[i];
         if( numbers[i] < numbers[i - 1])
         {
             int j = 0;
-            for(j = i - 1; j >= 0 && temp < numbers[j] ;j--){
+            for(j = i - 1; j >= 0 && temp < numbers[j] ;j--)
+            {
                 numbers[j + 1] = numbers[j];
             }
             numbers[j + 1] = temp;
@@ -113,7 +120,8 @@ void insertSort(int* numbers, int n){
     }
 }
 
-void Swap(int *p,int *q){
+void Swap(int *p,int *q)
+{
     auto temp = *p;
     *p = *q;
     *q = temp;
@@ -152,7 +160,8 @@ void quickSort(int* numbers,int left,int right)
             while(numbers[++i] < pivot);
             while(numbers[--j] > pivot);
 
-            if(i < j){
+            if(i < j)
+            {
                 Swap(&numbers[i],&numbers[j]);
                 swapCount++;
             }
